@@ -109,8 +109,8 @@ server.on('Error', error => { console.log(error); });
 app.get("/", (req,res)=>{
     res.send(
         `<ul>
-            <li>Para ver todos los productos acceda a <a href="http://localhost:8080/productos">este vínculo</a></li>
-            <li>Para ver un producto aleatorio acceda a <a href="http://localhost:8080/productoRandom">este vínculo</a></li>
+            <li>Para ver todos los productos acceda a <a href="/productos">este vínculo</a></li>
+            <li>Para ver un producto aleatorio acceda a <a href="/productoRandom">este vínculo</a></li>
         </ul>`)
 })
 
@@ -121,7 +121,7 @@ app.get("/productos", async (req,res)=>{
                 await stock.getAll()
             )}
             </p>
-            <a href="http://localhost:8080">Volver</a>
+            <a href="/">Volver</a>
         `        
     )
 })
@@ -142,7 +142,7 @@ app.get("/productoRandom", async (req,res)=>{
                 )
             )}
             </li>
-            <a href="http://localhost:8080">Volver</a>
+            <a href="/">Volver</a>
         `	
     )
 })
