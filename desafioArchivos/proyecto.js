@@ -97,19 +97,19 @@ const stock = new Contenedor('productos.txt');
 
 const ejecutarTodo = async () => {
 
-await stock.save({
-        title: 'Laptop',
-        price: '2000',
-        thumbnail: 'img',
-})
+    await stock.save({
+            title: 'Laptop',
+            price: '2000',
+            thumbnail: 'img',
+    })
 
-await stock.getById(4)
+    await stock.getById(4)
 
-await stock.getAll()
+    await stock.getAll()
 
-await stock.deleteById(4)
+    await stock.deleteById(4)
 
-await stock.deleteAll()
+    await stock.deleteAll()
 
 }
 

@@ -11,10 +11,15 @@
     "url": "git+https://github.com/GerardoDR/bcknd-coder.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "yo",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/GerardoDR/bcknd-coder/issues"
   },
-  "homepage": "https://github.com/GerardoDR/bcknd-coder#readme"
+  "homepage": "https://github.com/GerardoDR/bcknd-coder#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "moment": "~2.29.1"
+  },
+  "devDependencies": {}
 }
