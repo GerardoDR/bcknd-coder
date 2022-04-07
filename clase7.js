@@ -10,6 +10,8 @@ const server = app.listen(PORT, () => {
 
 const frase = 'Hola mundo como están?'
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/api/frase", (req,res)=>{
     res.json({
