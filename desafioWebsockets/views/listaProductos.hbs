@@ -1,0 +1,13 @@
+{{!-- productos --}}
+{{#if stockProductos}}
+    <h2>Productos</h2>
+    <ul>
+        {{#each stockProductos}}
+        <li class="row">
+            <h3>{{title}}</h3>
+            <p>{{price}}</p>
+            <img src="{{thumbnail}}" alt="{{title}}">
+        </li>
+        {{/each}}
+    </ul>
+{{/if}}
