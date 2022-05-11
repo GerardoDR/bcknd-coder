@@ -15,13 +15,13 @@ const addProduct = (e) => {
 };
 
 const addMessage = (e) => {
-  const date = new Date();
-  const fecha = `[${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`;
+  const fecha = new Date();
+  const date = `[${fecha.getDate()}/${fecha.getMonth()}/${fecha.getFullYear()} ${fecha.getHours()}:${fecha.getMinutes()}:${fecha.getSeconds()}]`;
 
     const mensaje = { 
         email: document.getElementById('email').value,
-        mensaje: document.getElementById('mensaje').value,
-        fecha
+        message: document.getElementById('mensaje').value,
+        date
       }
     console.log(mensaje);
     socket.emit('nuevo-mensaje', mensaje);

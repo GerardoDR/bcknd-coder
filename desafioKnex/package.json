@@ -11,10 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "knex": "^2.0.0",
+    "knex": "0.95.15",
     "mysql": "^2.18.1",
     "socket.io": "^4.4.1",
-    "sqlite3": "^5.0.8"
+    "sqlite3": "5.0.2"
   },
   "devDependencies": {},
   "description": ""

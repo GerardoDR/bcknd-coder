@@ -6,7 +6,8 @@ const knexMysql = require('knex')({
         password: '',
         database: 'ecommerce'
     },
-    pool: {min: 0, max: 10}
+    pool: {min: 0, max: 10},
+    useNullAsDefault: true
 })
 
 module.exports = { knexMysql };

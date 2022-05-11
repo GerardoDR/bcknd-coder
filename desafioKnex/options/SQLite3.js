@@ -3,6 +3,7 @@ const knexSqLite = require('knex')({
     connection: {
         filename: './DB/ecommerce.sqlite'
     },
+    pool: {min: 0, max: 10},
     useNullAsDefault: true
 })
 
