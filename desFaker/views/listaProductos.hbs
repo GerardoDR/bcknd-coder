@@ -1,0 +1,18 @@
+{{!-- productos --}}
+
+{{#if stockProductos}}
+    <h2>Productos</h2>
+    <ul>
+        {{#each stockProductos}}
+        <li class="row">
+            <h3>{{name}}</h3>
+            <p>{{price}}</p>
+            <img src="{{photo}}" alt="{{name}}">
+        </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <h2>NO HAY PRODUCTOS PARA MOSTRAR</h2>
+{{/if}}
+
+<h2><a href="/">Volver a Home...</a></h2>

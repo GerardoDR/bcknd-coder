@@ -1,0 +1,9 @@
+{{#if mensajes}}
+    <ul>
+        {{#each mensajes}}
+            <li class="rowMsj">
+                <div><strong>{{author.id}} </strong><span class="fecha">{{date}}</span>:</div><span>{{text}}</span>
+            </li>
+        {{/each}}
+    </ul>
+{{/if}}

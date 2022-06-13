@@ -1,0 +1,28 @@
+{{!-- <section>
+    <h1>Plataforma de ingreso de productos</h1>
+    <div>
+        <h2>Ingresar producto nuevo</h2>
+        <form onsubmit="return addProduct(this)">
+            <input placeholder="Titulo del producto" type="text" name="title" id="title" required />
+            <input placeholder="Precio" type="number" name="price" id="price" required>
+            <input placeholder="Ruta de la imagen" type="text" name="thumbnail" id="thumbnail">
+            <input type="submit" value="Enviar formulario">
+        </form>
+    </div>
+</section>
+<div class="productos"></div> --}}
+<h2><a href="/productos-test">Ver productos...</a></h2>
+<section>
+    <h2>Centro de mensajes</h2>
+    <form onsubmit="return addMessage(this)">
+        <input type="text" name="email" id="email" placeholder="correo" required>
+        <input type="text" name="nombre" id="name" placeholder="nombre" required>
+        <input type="text" name="apellido" id="surname" placeholder="apellido" required>
+        <input type="number" name="edad" id="age" placeholder="edad" required>
+        <input type="text" name="alias" id="alias" placeholder="alias" required>
+        <input type="text" name="avatar" id="avatar" placeholder="url de imagen" required>
+        <textarea name="mensaje" id="mensaje" cols="22"rows="3" placeholder="Ingrese su mensaje" required></textarea>
+        <button type="submit" value="Enviar">Enviar</button>
+    </form>
+</section>
+<div class="mensajes"></div>
