@@ -1,23 +1,25 @@
 const fs = require("fs");
 const { normalize, denormalize } = require("normalizr");
-const {mensajesSch} = require("./normalizrSchemas");
+const {mensajesSch} = require("./data/normalizrSchemas");
 
 class ContainerMsgs {
   constructor(fileName) {
     this.fileName = fileName,
     this.normzed = null;
+    this.flag = false;
   }
 
   getAll() {
+    let content = [];
     try{
-      let content = [];
-      let file = fs.readFileSync(this.fileName, "utf-8");
-      content = JSON.parse(file);
+      let data = fs.readFileSync(this.fileName, "utf-8");
+      content = JSON.parse(data);
       this.normzed = normalize(content, mensajesSch);
+      return content;
     } catch {
-      console.log("No existe el archivo");
+      console.log("No se encuentra el archivo");
+      return [];
     }
-    return content;
   }
 
   save(obj) {

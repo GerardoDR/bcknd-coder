@@ -1,23 +1,23 @@
 const socket = io.connect();
 
 ///////// normalizr
-const mensajesSch = new normalizr.schema.Entity("mensajes",{
-  mensajes: [mensaje],
-});
+
+const author = new schema.Entity("author");
+
+const text = new schema.Entity("text");
 
 const mensaje = new schema.Entity("mensaje", {
   author,
   text
 });
-const mensajes = document.querySelector(".mensajes");
 
-///////// handlebars
-    const template = Handlebars.compile('<h1>{{nombre}}</h1>'); // compila la plantilla
-    const html = template({ nombre: 'coder' }); // genera el html
-    document.querySelector('span').innerHTML = html; // inyecta el resultado en la vista
-/////////
+const mensajesSch = new schema.Entity("mensajes",{
+  mensajes: [mensaje],
+});
 
 ///////// mensajes
+
+const mensajes = document.querySelector(".mensajes");
 
 const addMessage = (e) => {
   const fecha = new Date();
@@ -40,5 +40,18 @@ const addMessage = (e) => {
 };
 
 socket.on("mensajes", (data) => {
-  mensajes.innerHTML = data;
+  data = normalizr.denormalize(data.result, mensajesSch, data.entities);
+  console.log(data);
+  // const template = Handlebars.compile(`
+  //   {{#if mensajes}}
+  //   <ul>
+  //       {{#each mensajes}}
+  //           <li class="rowMsj">
+  //               <div><strong>{{author.id}} </strong><span class="fecha">{{date}}</span>:</div><span>{{text}}</span>
+  //           </li>
+  //       {{/each}}
+  //   </ul>
+  //   {{/if}}`);
+  // const html = template({ mensajes: data });
+  // mensajes.innerHTML = html;
 });
