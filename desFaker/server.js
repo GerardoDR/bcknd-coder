@@ -1,22 +1,14 @@
 const express = require("express");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
-const handlebars = require("express-handlebars");
-const ContainerMsgs = require("./containerMsgs");
-const file = "./data/messages.txt";
-const { generate } = require("./data/faker");
+const ContainerMsgs = require("./src/containerMsgs");
+const { generate } = require("./src/data/faker");
 
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
-const hbs = handlebars.create({
-  extname: ".hbs",
-  defaultLayout: "index.hbs",
-  layoutsDir: __dirname + "/views/layouts",
-  partialsDir: __dirname + "/views/partials/",
-});
-
 const PORT = 3000;
+const messages = new ContainerMsgs('src/data/messages.json');
 
 httpServer.listen(PORT, (err) => {
   if (err) throw new Error(`Error en servidor ${err}`);
@@ -28,53 +20,49 @@ httpServer.listen(PORT, (err) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.engine("hbs", hbs.engine);
-
-app.set("views", "./views");
-app.set("view engine", "hbs");
 app.use(express.static("public"));
 
-const messages = new ContainerMsgs(file);
-
-app.get("/", async (req, res) => {
-  res.render("main", {});
+app.get("/", (req, res) => {
+  res.sendFile("index.html", { root: __dirname });
 });
 
 app.get("/productos-test", async (req, res) => {
-  const stockProductos = generate();
-  res.render("listaProductos", {stockProductos});
+  let stockProductos = await generate();
+  if (stockProductos.length > 0) {
+    res.send(`
+    <h2>Productos</h2>
+    <ul>
+        ${stockProductos.map((producto) => {
+          return (
+          `<li class="row">
+            <h3>${producto.name}</h3>
+            <p>${producto.price}</p>
+            <img src=${producto.photo} alt=${producto.name}>
+        </li>`);
+        }).join(" ")}
+    </ul>
+    <h2><a href="/">Volver a Home...</a></h2>
+    `)} else{
+      console.log("Error al generar o mapear los productos");
+    };
 });
 
-io.on("connection", async (socket) => {
+io.on("connection", (socket) => {
   try {
-    // const stockProductos = await products.getAll();
-    // const lista = await hbs.render("./views/listaProductos.hbs", {
-    //   stockProductos,
-    // });
     const mensajes = messages.getAll();
-    const renderMsj = await hbs.render("./views/chat.hbs", { mensajes });
-
-    socket.emit("mensajes", renderMsj);
-    // socket.emit("productos", lista);
+    if(mensajes){
+      socket.emit("mensajes", mensajes);
+    } else {
+      console.log("Aún no hay mensajes");
+    }
   } catch (error) {
     console.log(error);
     throw error;
   }
 
-  socket.on("nuevo-mensaje", async (data) => {
-    await messages.save(data);
-    const mensajes = await messages.getAll();
-    const renderMsj = await hbs.render("./views/chat.hbs", { mensajes });
-    io.sockets.emit("mensajes", renderMsj);
+  socket.on("nuevo-mensaje", (data) => {
+    messages.save(data);
+    const mensajes = messages.getAll();
+    io.sockets.emit("mensajes", mensajes);
   });
-
-  // socket.on("nuevo-producto", async (data) => {
-  //   await products.insert(data);
-  //   const stockProductos = await products.getAll();
-  //   const lista = await hbs.render("./views/listaProductos.hbs", {
-  //     stockProductos,
-  //   });
-  //   io.sockets.emit("productos", lista);
-  // });
 });

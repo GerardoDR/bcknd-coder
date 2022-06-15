@@ -1,8 +1,7 @@
 {
-  "name": "desFaker",
+  "name": "desFaker2",
   "version": "1.0.0",
-  "description": "",
-  "main": "containerMsgs.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -17,5 +16,6 @@
   "devDependencies": {
     "faker": "^5.5.3",
     "normalizr": "^3.6.2"
-  }
+  },
+  "description": ""
 }
