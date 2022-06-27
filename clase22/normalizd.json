@@ -1,0 +1,31 @@
+{
+  "entities": {
+    "author": {
+      "callielancaster@uneeq.com": {
+        "id": "callielancaster@uneeq.com",
+        "name": "Janie",
+        "surname": "Coleman",
+        "age": 37,
+        "alias": "cupidatat",
+        "avatar": "http://placehold.it/32x32"
+      }
+    },
+    "mensaje": {
+      "0": {
+        "id": 0,
+        "author": "callielancaster@uneeq.com",
+        "date": "2019-02-10T11:46:22 +03:00",
+        "text": "Consequat duis in minim qui officia reprehenderit veniam sint ad culpa do culpa sint laboris. Mollit excepteur elit magna ut est amet consequat nulla quis enim amet eu. Non veniam veniam aliquip culpa laboris. Dolore ullamco eiusmod exercitation ipsum exercitation est ut cillum commodo ipsum proident eu. Magna sunt nisi commodo enim proident.\r\n"
+      }
+    },
+    "mensajes": {
+      "mensajes": {
+        "id": "mensajes",
+        "mensajes": [
+          0
+        ]
+      }
+    }
+  },
+  "result": "mensajes"
+}

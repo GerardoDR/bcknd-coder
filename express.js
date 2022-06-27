@@ -15,6 +15,7 @@ server.on('Error', error => { console.log(error); });
 app.get("/", (req,res)=>{
     res.send("<h1 style='color:blue'>Bienvenidos al servidor express</h1>")
 })
+
 app.get("/visitas", (req,res)=>{
     visitas++
     res.send(`La cantidad de visitas es ${visitas}`)
