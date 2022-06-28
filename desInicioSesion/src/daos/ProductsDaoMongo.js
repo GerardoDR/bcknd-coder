@@ -1,9 +1,9 @@
-const ContainerMongoDb = require("../../containers/ContainerMongoDb");
-const productModel = require("../../models/products");
+const ContainerMongo = require("../containers/ContainerMongo");
+const productsModel = require("../models/products");
 
 class ProductsDaoMongo extends ContainerMongo {
     constructor(){
-        super(productModel);
+        super(productsModel);
         this.id = 0;
         this.checkId();
     }
@@ -25,7 +25,7 @@ class ProductsDaoMongo extends ContainerMongo {
         return await this.getOne(id);
     }
 
-    async updateById(id, name, description, thumbnail, price, stock) {
+    /* async updateById(id, name, description, thumbnail, price, stock) {
         let updatee = await this.getOne(id);
 
         if (updatee) {
@@ -57,9 +57,9 @@ class ProductsDaoMongo extends ContainerMongo {
         } else {
             return null;
         }
-    }
+    } */
         
 }
 
 
-module.exports = ProductsDaoMongoDb;
+module.exports = ProductsDaoMongo;

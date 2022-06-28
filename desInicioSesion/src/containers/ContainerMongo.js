@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-class ContainerMongoDb {
+class ContainerMongo {
   constructor(model) {
     mongoose.connect(
-      "mongodb+srv://gerardoDR:test1@cluster0.lkxvskd.mongodb.net/"AGREGAR LA COLECCION ACA"?retryWrites=true&w=majority",
+      "mongodb+srv://gerardoDR:test1@cluster0.lkxvskd.mongodb.net/db3?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -46,4 +46,4 @@ class ContainerMongoDb {
     }
   }
 }
-module.exports = ContainerMongoDb;
+module.exports = ContainerMongo;
