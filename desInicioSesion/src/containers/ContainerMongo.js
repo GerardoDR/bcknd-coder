@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 class ContainerMongo {
   constructor(model) {
     mongoose.connect(
-      "mongodb+srv://gerardoDR:test1@cluster0.lkxvskd.mongodb.net/db3?retryWrites=true&w=majority",
+      "mongodb+srv://gerardoDR:test1@cluster0.lkxvskd.mongodb.net/ecommerce?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
