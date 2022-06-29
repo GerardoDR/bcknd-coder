@@ -77,3 +77,5 @@ passport.serializeUser((user, callback) => {
 passport.deserializeUser((id, callback) => {
     usersModel.findById(id, callback)
 })
+
+module.exports = passport;
