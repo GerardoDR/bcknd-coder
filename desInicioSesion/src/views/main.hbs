@@ -2,13 +2,13 @@
     <h1>Plataforma de ingreso de productos</h1>
     <div>
         <h2>Ingresar producto nuevo</h2>
-        <form onsubmit="return addProduct(this)">
-            <input placeholder="Titulo del producto" type="text" name="title" id="title" required />
-            <input placeholder="Precio" type="number" name="price" id="price" required>
-            <input placeholder="Ruta de la imagen" type="text" name="thumbnail" id="thumbnail">
-            <input type="submit" value="Enviar formulario">
+        <form>
+            <input placeholder="Titulo del producto" type="text" name="newTitle"  required />
+            <input placeholder="Precio" type="number" name="newPrice"  required>
+            {{!-- <input placeholder="Ruta de la imagen" type="text" name="thumbnail" id="thumbnail"> --}}
+            <input type="submit" id="newProd" value="Agregar nuevo producto">
         </form>
     </div>
 </section>
 {{!-- <div class="productos"></div> --}}
-{{>products}}
+<div class="productList"></div>

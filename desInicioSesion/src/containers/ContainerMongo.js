@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 class ContainerMongo {
   constructor(model) {
     mongoose.connect(
-      "mongodb+srv://gerardoDR:test1@cluster0.lkxvskd.mongodb.net/ecommerce?retryWrites=true&w=majority",
+      "mongodb+srv://gerardoDR:test1@cluster0.lkxvskd.mongodb.net/db3?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -15,35 +15,30 @@ class ContainerMongo {
   }
 
   async getAll() {
-    return await this.model.find();
+    let resp = await this.model.find();
+    return resp;
   }
 
-  async getOne(id) {
-    return await this.model.findOne({ id });
+  // async getOne(id) {
+  //   return await this.model.findOne({ id });
+  // }
+
+  async save(obj) {
+    return await this.model.insertMany([obj])
+    
   }
 
-  async save(obj, id) {
-    let objToDB = { ...obj, id };
-    return await this.model.insertMany([objToDB], function (err, docs) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log(docs);
-      }
-    });
-  }
+  // async update(id, obj) {
+  //   return await this.model.updateOne({ id }, obj);
+  // }
 
-  async update(id, obj) {
-    return await this.model.updateOne({ id }, obj);
-  }
-
-  async deleteById(id) {
-    try {
-      let res = await this.model.deleteOne({ id });
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // async deleteById(id) {
+  //   try {
+  //     let res = await this.model.deleteOne({ id });
+  //     return res;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 }
 module.exports = ContainerMongo;

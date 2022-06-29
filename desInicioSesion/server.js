@@ -1,6 +1,7 @@
 const express = require("express");
 const handlebars = require("express-handlebars");
 const productsRouter = require('./src/routes/productsRouter');
+const usersRouter = require('./src/routes/usersRouter')
 const pageRouter = require('./src/routes/routes')
 
 const app = express();
@@ -15,13 +16,13 @@ const hbs = handlebars.create({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname+"/public"));
 app.use('/api/products', productsRouter)
-// app.use('/api/users', usersRouter)
-app.use('', pageRouter)
+app.use('/', usersRouter)
+// app.use('', pageRouter)
 app.engine("hbs", hbs.engine);
 app.set("views", "./src/views");
 app.set("view engine", "hbs");
+app.use(express.static(__dirname+"/public"));
 
 
 
@@ -37,4 +38,4 @@ const server = app.listen(PORT, (err) => {
   );
 });
 
-server.on("error", (err) => console.log(`Error en el servidor ${error}`))
+server.on("error", (err) => console.log(`Error en el servidor ${err}`))

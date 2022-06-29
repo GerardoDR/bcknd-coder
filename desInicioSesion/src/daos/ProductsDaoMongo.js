@@ -4,26 +4,17 @@ const productsModel = require("../models/products");
 class ProductsDaoMongo extends ContainerMongo {
     constructor(){
         super(productsModel);
-        this.id = 0;
-        this.checkId();
+        // this.id = 0;
     }
 
-    async checkId(){
-        let products = await this.getAll();
+    // async saveProd(product){
+    //     await this.save(product, this.id);
+    //     this.id++;
+    // }
 
-        if(products.length > 0){
-            this.id = parseInt(products[products.length - 1].id) + 1;
-        };
-    }
-
-    async saveProd(product){
-        await this.save(product, this.id);
-        this.id++;
-    }
-
-    async getById(id) {
-        return await this.getOne(id);
-    }
+    // async getById(id) {
+    //     return await this.getOne(id);
+    // }
 
     /* async updateById(id, name, description, thumbnail, price, stock) {
         let updatee = await this.getOne(id);
