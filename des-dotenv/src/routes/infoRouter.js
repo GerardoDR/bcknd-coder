@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const path = require('path');
-const processRouter = Router()
+const infoRouter = Router()
 
 function getInfo (){
     let info = {
@@ -15,9 +15,9 @@ function getInfo (){
     return info;
 }
 
-processRouter.get('/', function (req, res) {
+infoRouter.get('/', function (req, res) {
     const info = getInfo()
     res.render('info', {info} );
 });
 
-module.exports = processRouter;
+module.exports = infoRouter;

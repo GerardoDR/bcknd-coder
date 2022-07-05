@@ -3,7 +3,8 @@ const session = require('express-session');
 const handlebars = require('express-handlebars');
 const routes = require('./src/routes/routes');
 const productsRouter = require('./src/routes/productsRouter');
-const processRouter = require('./src/routes/processRouter');
+const infoRouter = require('./src/routes/infoRouter');
+const randomsRouter = require('./src/routes/randomsRouter');
 const UserModel = require('./src/models/usuarios');
 const yargs = require('yargs/yargs')(process.argv.splice(2));
 
@@ -16,10 +17,13 @@ const LocalStrategy = require('passport-local').Strategy;
 
 const app = express()
 
+// YARGS
 const args = yargs
 .default({ port: 8080 })
 .alias({port: 'p'})
 .argv
+
+//SESSION
 
 app.use(session({
     secret: 'coderhouse',
@@ -38,6 +42,9 @@ app.use(express.urlencoded({extended:true}));
 app.use(passport.initialize())
 app.use(passport.session())
 
+
+//HANDLEBARS
+
 app.engine(
     "hbs", 
     handlebars.engine({
@@ -54,6 +61,8 @@ app.engine(
 app.set('view engine', 'hbs');
 app.set('views', './src/views');
 app.use(express.static(__dirname + "/public"));
+
+//PASSPORT
 
 passport.use('login', new LocalStrategy(
     (username, password, callback) => {
@@ -130,8 +139,8 @@ passport.deserializeUser((id, callback) => {
 
 //RUTAS NO AUTH
 app.use('/api/products', productsRouter)
-app.use('/api/info', processRouter)
-
+app.use('/api/info', infoRouter)
+app.use('/api/randoms', randomsRouter)
 //  INDEX
 app.get('/', routes.getRoot);
 
