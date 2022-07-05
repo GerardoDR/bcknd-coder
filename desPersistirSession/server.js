@@ -62,7 +62,7 @@ app.use(
 
 app.get("/", (req, res) => {
   if (!req.session.logged) {
-    console.log("session logged: " + req.session.logged);
+    // console.log("session logged: " + req.session.logged);
     res.redirect("/login");
   } else {
     console.log("session logged: " + req.session.logged);

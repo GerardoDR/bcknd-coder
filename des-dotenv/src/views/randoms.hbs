@@ -1,5 +1,10 @@
-<div>
-    {{#each number.cypher}}
-        <li>{{number.cypher.value}}</li>
-    {{/each}}
+<div class="container" style="background-color: #748067;">
+    <div class="row row-cols-1" style="list-style: none; color: #fff;">
+        {{#each nums}}
+            <li class="col-sm py-2">
+                <p style="font-weight:bold ;">{{@key}}</p>
+                <span style="font-style:italic;">{{this}}</span>
+            </li>
+        {{/each}}
+    </div>
 </div>

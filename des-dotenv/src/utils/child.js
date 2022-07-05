@@ -3,14 +3,15 @@ const getRandom = () =>{
     return Math.floor(Math.random()* (1000) + 1);
 }
 
-process.on('start',(numbers, count) =>{
-    for(let i = 0; i < count; i++ ){
+console.log('CHILD EJECUTADO');
+process.on('message', (data) =>{
+    for(let i = 0; i < data.count; i++ ){
         let random = getRandom();
-        if(numbers[random]){
-            numbers[random]++;
+        if(data.numbers[random]){
+            data.numbers[random]++;
         } else {
-            numbers[random] = 1;
+            data.numbers[random] = 1;
         }
     }
-    process.send('result', {numbers})
+    process.send(data.numbers)
 })

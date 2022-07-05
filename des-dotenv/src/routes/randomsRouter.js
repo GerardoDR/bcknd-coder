@@ -18,17 +18,10 @@ randomsRouter.get('/', (req, res) => {
     let numbers = {};
     let count = chkParams(req)
     const forked = fork('./src/utils/child.js')
-    forked.send('start', {numbers, count})
-    // for(let i = 0; i < count; i++ ){
-    //     let random = getRandom();
-    //     if(numbers[random]){
-    //         numbers[random]++;
-    //     } else {
-    //         numbers[random] = 1;
-    //     }
-    // }
-    forked.on('result', (nums)=>{
-        res.json({nums})
+    let dataToChild= { numbers, count }
+    forked.send(dataToChild)
+    forked.on('message', nums =>{
+        res.render('randoms', {nums})
     })
 });
 
