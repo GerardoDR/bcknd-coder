@@ -1,0 +1,3 @@
+pm2 start server.js --name="forked" --watch -- -m FORK
+
+pm2 start server.js --name="cluster" --watch -- -m CLUSTER
