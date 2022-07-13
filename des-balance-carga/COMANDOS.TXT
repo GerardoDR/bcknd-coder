@@ -1,0 +1,8 @@
+
+
+COMANDOS A EJECUTAR:
+pm2 start server.js --name="forked8080" --watch -- -m FORK
+pm2 start server.js --name="cluster8082" --watch -- -p 8082 -m CLUSTER
+pm2 start server.js --name="cluster8083" --watch -- -p 8083 -m CLUSTER
+pm2 start server.js --name="cluster8084" --watch -- -p 8084 -m CLUSTER
+pm2 start server.js --name="cluster8085" --watch -- -p 8085 -m CLUSTER

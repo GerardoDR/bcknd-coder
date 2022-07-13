@@ -10,6 +10,8 @@ const cluster = require("cluster");
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
 
+require("events").EventEmitter.defaultMaxListeners = 15;
+
 const { TIEMPO_EXPIRACION } = require("./src/config/globals");
 const { validatePass } = require("./src/utils/passValidator");
 const { createHash } = require("./src/utils/hashGenerator");
@@ -23,14 +25,6 @@ const numCPUs = require("os").cpus().length;
 
 const workerInit = (port) => {
   const PORT = port;
-
-  app.get("/", (req, res) => {
-    res.send(
-      `Servidor express en ${PORT} - <b>PID ${
-        process.pid
-      }</b> - ${new Date().toLocaleString()}`
-    );
-  });
 
   let server = app.listen(PORT, (err) => {
     if (!err)
@@ -202,30 +196,32 @@ app.get("/ruta-protegida", routes.checkAuthentication, (req, res) => {
 //  FAIL ROUTE
 app.get("*", routes.failRoute);
 
-if (cluster.isPrimary) {
+
+if (cluster.isMaster) {
   console.log(numCPUs);
   console.log(`PID MASTER ${process.pid}`);
 
   if (args.mode === "CLUSTER") {
-    if (args.port === 8080) {
-      let clusterPort = 8082;
-      // 1 server por hilo dejando 1 hilo libre
-      for (let i = 0; i < numCPUs - 1; i++) {
-        cluster.fork(clusterPort);
 
+    /* 
+    PUERTOS DINAMICOS DENTRO DE UN CLUSTER
+    if (args.port === 8080) {
+      let worker_env = {};
+      let clusterPort = 8082;
+      // 1 server por hilo dejando 1 hilo libre para el fork al 8080
+      for (let i = 0; i < numCPUs - 1; i++) {
+        worker_env.clusterPort = clusterPort;
+        cluster.fork(worker_env);
         if (clusterPort < 8085) {
           clusterPort++;
-          console.log(
-            "------------------------------------------- ARGS PORT: " +
-              clusterPort
-          );
         } else {
           clusterPort = 8082;
-          console.log(
-            "-------------------------------------------RESET CONTEO PUERTOS"
-          );
         }
       }
+    } */
+
+    for (let i = 0; i < numCPUs; i++) {
+      cluster.fork();
     }
   } else if (args.mode === "FORK") {
     cluster.fork();
@@ -244,14 +240,10 @@ if (cluster.isPrimary) {
     cluster.fork();
   });
 } else {
-  if (process.env.clusterPort) {
+  /* if (process.env.clusterPort) {
     workerInit(process.env.clusterPort);
   } else {
-    console.log(
-      "entro por false | ",
-      "puerto en env: " + process.env.clusterPort,
-      " | es cluster? " + process.env.isCluster
-    );
-    workerInit(8080);
-  }
+    workerInit(args.port);
+  } */
+  workerInit(args.port)
 }
