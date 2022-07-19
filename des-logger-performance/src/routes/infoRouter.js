@@ -20,7 +20,7 @@ function getInfo (){
 
 infoRouter.get('/', function (req, res) {
         const info = getInfo();
-        logApiInfo(info);
+        // logApiInfo(info);
         res.render('info', {info} );
 });
 
