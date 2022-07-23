@@ -1,2 +1,0 @@
-# bcknd-coder
-Practicas MERN

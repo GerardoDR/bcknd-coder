@@ -1,1 +1,0 @@
-[{"id":1,"title":"Regadera Plástica","price":"1470","thumbnail":"https://http2.mlstatic.com/D_NQ_NP_716966-MLA48554788908_122021-O.webp"}]

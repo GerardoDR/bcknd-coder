@@ -9,19 +9,16 @@ const UserModel = require("./src/models/usuarios");
 const cluster = require("cluster");
 const yargs = require("yargs/yargs");
 const { hideBin } = require("yargs/helpers");
-
-require("events").EventEmitter.defaultMaxListeners = 15;
-
+const compression = require('compression');
+// require("events").EventEmitter.defaultMaxListeners = 15; NECESARIO PARA ASIGNACION DINAMICA DE PUERTOS DESDE CLUSTER
 const { TIEMPO_EXPIRACION } = require("./src/config/globals");
 const { validatePass } = require("./src/utils/passValidator");
 const { createHash } = require("./src/utils/hashGenerator");
-
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-
 const app = express();
-
 const numCPUs = require("os").cpus().length;
+const { loggerInfo, logFailRoute } = require("./src/utils/logger")
 
 const workerInit = (port) => {
   const PORT = port;
@@ -33,7 +30,7 @@ const workerInit = (port) => {
       );
   });
 
-  server.on("error", (error) => console.log(`Error en el servidor ${error}`));
+  server.on("error", (error) => console.log(error));
 };
 
 // YARGS
@@ -61,6 +58,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(compression())
+app.use((req, res, next) => {
+  loggerInfo.log('info', `RECEIVED REQUEST TO: ${req.url} | WITH METHOD: ${req.method}`)
+  next();
+});
+
 
 //HANDLEBARS
 
@@ -79,7 +82,7 @@ app.engine(
 );
 app.set("view engine", "hbs");
 app.set("views", "./src/views");
-// app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/public")); //COMENTAR LINEA PARA GESTIONAR POR NGINX
 
 //PASSPORT
 
@@ -194,11 +197,10 @@ app.get("/ruta-protegida", routes.checkAuthentication, (req, res) => {
 });
 
 //  FAIL ROUTE
-app.get("*", routes.failRoute);
+app.get("*", logFailRoute, routes.failRoute);
 
 
 if (cluster.isMaster) {
-  console.log(numCPUs);
   console.log(`PID MASTER ${process.pid}`);
 
   if (args.mode === "CLUSTER") {

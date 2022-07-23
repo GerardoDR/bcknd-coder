@@ -1,9 +1,0 @@
--compression
-con: 1.1kb
-sin: 1.6kb
-
-artillery quick --count 20 -n 50 http://localhost:8080/api/info > result_info_logged.txt
-artillery quick --count 20 -n 50 http://localhost:8080/api/info > result_info_notLogged.txt
-
-node --prof-process isolate-00000262306FF220-16336-v8.log > prof-process_logged.txt
-node --prof-process isolate-0000023628F3F860-12004-v8.log > prof-process_notLogged.txt  
