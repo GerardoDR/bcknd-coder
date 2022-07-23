@@ -1,14 +1,7 @@
 const mongoose = require("mongoose");
-/* 
-CREAR .env con las siguientes variables
-
-MONGO_URI = ''
-TIEMPO_EXPIRACION = 300000000
-
-*/
-const { MONGO_URI } = require('../config/globals')
 
 
+const MONGO_URI = process.env.MONGO_URI
 class ContainerMongo {
   constructor(model) {
     mongoose.connect(
