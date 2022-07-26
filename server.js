@@ -4,11 +4,11 @@ const handlebars = require("express-handlebars");
 const routes = require("./src/routes/routes");
 const productsRouter = require("./src/routes/productsRouter");
 const infoRouter = require("./src/routes/infoRouter");
-const randomsRouter = require("./src/routes/randomsRouter");
+// const randomsRouter = require("./src/routes/randomsRouter");
 const UserModel = require("./src/models/usuarios");
 const cluster = require("cluster");
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
+// const yargs = require("yargs/yargs");
+// const { hideBin } = require("yargs/helpers");
 const compression = require('compression');
 // require("events").EventEmitter.defaultMaxListeners = 15; NECESARIO PARA ASIGNACION DINAMICA DE PUERTOS DESDE CLUSTER
 const TIEMPO_EXPIRACION = process.env.TIEMPO_EXPIRACION
@@ -34,9 +34,14 @@ const workerInit = (port) => {
 };
 
 // YARGS
-const args = yargs(hideBin(process.argv))
-  .default({ mode: "FORK", port: 8080 })
-  .alias({ m: "mode", p: "port" }).argv;
+const args = {
+  mode: process.env.MODE || "FORK",
+  port: process.env.PORT || 8080
+}
+
+// const args = yargs(hideBin(process.argv))
+//   .default({ mode: "FORK", port: 8080 })
+//   .alias({ m: "mode", p: "port" }).argv;
 
 //SESSION
 
@@ -164,7 +169,7 @@ passport.deserializeUser((id, callback) => {
 //RUTAS NO AUTH
 app.use("/api/products", productsRouter);
 app.use("/api/info", infoRouter);
-app.use("/api/randoms", randomsRouter);
+// app.use("/api/randoms", randomsRouter);
 //  INDEX
 app.get("/", routes.getRoot);
 
@@ -204,24 +209,6 @@ if (cluster.isMaster) {
   console.log(`PID MASTER ${process.pid}`);
 
   if (args.mode === "CLUSTER") {
-
-    /* 
-    PUERTOS DINAMICOS DENTRO DE UN CLUSTER
-    if (args.port === 8080) {
-      let worker_env = {};
-      let clusterPort = 8082;
-      // 1 server por hilo dejando 1 hilo libre para el fork al 8080
-      for (let i = 0; i < numCPUs - 1; i++) {
-        worker_env.clusterPort = clusterPort;
-        cluster.fork(worker_env);
-        if (clusterPort < 8085) {
-          clusterPort++;
-        } else {
-          clusterPort = 8082;
-        }
-      }
-    } */
-
     for (let i = 0; i < numCPUs; i++) {
       cluster.fork();
     }
@@ -242,10 +229,5 @@ if (cluster.isMaster) {
     cluster.fork();
   });
 } else {
-  /* if (process.env.clusterPort) {
-    workerInit(process.env.clusterPort);
-  } else {
-    workerInit(args.port);
-  } */
   workerInit(args.port)
 }
