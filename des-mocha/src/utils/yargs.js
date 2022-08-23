@@ -1,6 +1,6 @@
 const yargs = require('yargs/yargs')(process.argv.slice(2));
 const argv = yargs
-    .default({storage: 'fs'})
+    .default({storage: 'mem'})
     .alias({s: 'storage'})    
 .argv
 

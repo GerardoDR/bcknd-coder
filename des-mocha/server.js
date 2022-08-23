@@ -1,8 +1,5 @@
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
-
-
-
 
 const productsRouter = require("./src/routes/products");
 
@@ -14,7 +11,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + "/public"));
-
 
 //PRODUCTS
 app.use("/api/products", productsRouter);

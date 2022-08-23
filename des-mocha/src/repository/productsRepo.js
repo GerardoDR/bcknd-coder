@@ -33,8 +33,25 @@ class ProductsRepo {
     });
   }
 
-  add(obj) {
-    return this.dao.save(obj);
+  async getById(id) {
+    const dto = await this.dao.getById(id);
+    return new Product(dto)
+  }
+
+  async add(obj) {
+    let resp = await this.dao.save(obj);
+    return resp;
+  }
+
+  async modify(id, values) {
+    let resp = await this.dao.update(id, values);
+    return resp;
+  }
+
+  async deleteById(id) {
+    let resp = await this.dao.delete(id);
+    return resp;
+
   }
 }
 

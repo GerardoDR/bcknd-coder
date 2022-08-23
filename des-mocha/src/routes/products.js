@@ -5,7 +5,7 @@ const productsRouter = Router();
 
 productsRouter.get('/', getAll);
 productsRouter.post('/', saveProduct);
-productsRouter.put('/', updateProduct);
+productsRouter.patch('/', updateProduct);
 productsRouter.delete('/', removeProduct);
 
 module.exports = productsRouter;

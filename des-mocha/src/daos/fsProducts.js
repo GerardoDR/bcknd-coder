@@ -29,7 +29,8 @@ class fsProductsDao {
   async getById(id) {
     try {
       const products = await read(this.file);
-      console.log(products.find((p) => p.id === id));
+      const found = products.find((p) => p.id === id);
+      return found;
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +45,31 @@ class fsProductsDao {
     }
   }
 
-  async deleteById(id) {
+  async update(id, values) {
+    try {
+      const products = await read(this.file);
+      const found = products.find((p) => p.id === id);
+      if (found) {
+        let updatedFlag = 0
+        for (val in values) {
+          if (Object.hasOwn(found, val)) {
+            found[val] = values[val];
+            updatedFlag++
+          }
+        }
+        if (updatedFlag > 0) {
+          await this.deleteAll();
+          await write(this.file, JSON.stringify(products));
+          console.log(found)
+        }
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async delete(id) {
     try {
       const products = await read(this.file);
       const newProducts = products.filter((p) => p.id !== id);
@@ -68,9 +93,9 @@ class fsProductsDao {
 const read = async (file) => {
   try {
     const data = await fs.promises.readFile(file, "utf-8");
-    const parsedData = data.length>0?
-    JSON.parse(data)
-    : [];
+    const parsedData = data.length > 0 ?
+      JSON.parse(data)
+      : [];
     return parsedData;
   } catch (error) {
     console.log(error);

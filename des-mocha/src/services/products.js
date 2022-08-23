@@ -18,6 +18,19 @@ const getAllProd = async () => {
   return prods;
 };
 
-const srvcProducts = { newProd, getAllProd };
+const getProdById = async (id) => {
+  return await products.getById(id);
+}
+
+const updateById = async (id, values) => {
+  return await products.modify(id, values);
+}
+
+const deleteById = async (id) => {
+  return await products.deleteById(id);
+
+};
+
+const srvcProducts = { newProd, getAllProd, getProdById, updateById, deleteById };
 
 module.exports = srvcProducts;

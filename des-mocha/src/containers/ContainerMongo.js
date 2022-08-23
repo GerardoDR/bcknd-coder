@@ -40,14 +40,23 @@ class ContainerMongo {
     }
   }
 
-  async deleteById(id) {
+  async update(id, values) {
+    try {
+      const res = await this.updateOne({ _id: id }, values);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async delete(id) {
     try {
       await this.model.deleteOne({ _id: id });
     } catch (error) {
       console.log(error);
     }
   }
-  
+
   async deleteAll() {
     try {
       await this.model.deleteMany();
