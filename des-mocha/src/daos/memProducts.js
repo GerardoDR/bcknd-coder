@@ -13,25 +13,23 @@ class memProductsDao {
             return avail;
         };
         obj.id = getAvailableId(this.mem);
-        obj.thumbnail = 'http://fakeimg.pl/160x160?text=lorem&font=lobster'
         this.mem.push(obj);
     }
 
     update(id, values) {
         try {
             const products = this.getAll()
-            let found = products.find((p) => p.id === id);
+            let found = products.find((p) => p.id === Number(id));
             if (found) {
-                let updatedFlag = 0
-                for (val in values) {
-                    if (Object.hasOwn(found, val)) {
-                        found[val] = values[val];
-                        updatedFlag++
-                    }
-                }
-                if (updatedFlag > 0) {
-                    console.log('product updated');
-                    console.log(found)
+                let updated = 0
+                Object.keys(values).forEach((key) => {
+                    if (found[key]) {
+                        found[key] = values[key]
+                        updated++
+                    };
+                });
+                if (updated > 0) {
+                    return true;
                 }
             }
         } catch (error) {
@@ -44,7 +42,9 @@ class memProductsDao {
     }
 
     getAll() {
-        return this.mem
+        const ids = this.mem.map((p) => p.id);
+        console.log(ids);
+        return this.mem;
     }
 
     delete(id) {
@@ -52,10 +52,11 @@ class memProductsDao {
             console.log('no product');
             return false
         }
-        const filtered = this.mem.filter((p) => p.id !== id);
-        if (filtered) {
+        const filtered = this.mem.filter((p) => p.id !== Number(id));
+        if (filtered.length < this.mem.length) {
             this.mem = filtered
             console.log(`Se eliminó el producto con id ${id}`);
+            return true
         } else {
             console.log('error al eliminar producto');
         }
