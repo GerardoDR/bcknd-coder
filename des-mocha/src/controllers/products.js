@@ -25,8 +25,17 @@ const updateProduct = async (req, res) => {
     : res.status(400).json({error: 'did not update'})
 }
 
+const removeAll = async (req, res) => {
+  let result = await srvcProducts.deleteAll();
+  result ?
+    res.status(200).json({ message: 'products wiped out' })
+    : res.status(400).json({error: 'error deleting all products'})
+}
+
 const removeProduct = async (req, res) => {
-  if (!req.query.id) { res.status(400).json({ result: 'not a valid query', error: true }); }
+  console.log(req.query.id, req.query.all);
+  if (!req.query.id && !req.query.all) {res.status(400).json({ result: 'not a valid query', error: true }); }
+  if (req.query.all === "true") {return await removeAll()}
   let result = await srvcProducts.deleteById(req.query.id);
   result ?
     res.status(200).json({ message: 'product deleted' })

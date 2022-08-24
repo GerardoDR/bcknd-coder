@@ -51,7 +51,11 @@ class ProductsRepo {
   async deleteById(id) {
     let resp = await this.dao.delete(id);
     return resp;
+  }
 
+  async wipe(){
+    let resp = await this.dao.deleteAll();
+    return resp
   }
 }
 

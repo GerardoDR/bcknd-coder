@@ -31,6 +31,10 @@ const deleteById = async (id) => {
 
 };
 
-const srvcProducts = { newProd, getAllProd, getProdById, updateById, deleteById };
+const deleteAll = async () => {
+  return await products.wipe();
+}
+
+const srvcProducts = { newProd, getAllProd, getProdById, updateById, deleteById, deleteAll };
 
 module.exports = srvcProducts;

@@ -7,6 +7,7 @@ class fsProductsDao {
     if (fsProductsDao.file) return new fsProductsDao.file();
     this.file = "./src/dataFS/products.txt";
   }
+
   async save(obj) {
     const getAvailableId = (prods) => {
       const ids = prods.map((p) => p.id);
@@ -14,11 +15,9 @@ class fsProductsDao {
       ids.length > 0 && (avail = Math.max(...ids) + 1);
       return avail;
     };
-
     try {
       const products = await read(this.file);
       obj.id = getAvailableId(products);
-      obj.thumbnail = 'http://fakeimg.pl/160x160?text=lorem&font=lobster'
       products.push(obj);
       await write(this.file, JSON.stringify(products));
     } catch (error) {
@@ -48,22 +47,21 @@ class fsProductsDao {
   async update(id, values) {
     try {
       const products = await read(this.file);
-      const found = products.find((p) => p.id === id);
+      const found = products.find((p) => p.id === Number(id));
       if (found) {
-        let updatedFlag = 0
-        for (val in values) {
-          if (Object.hasOwn(found, val)) {
-            found[val] = values[val];
-            updatedFlag++
-          }
-        }
-        if (updatedFlag > 0) {
+        let updated = 0;
+        Object.keys(values).forEach((key) => {
+          if (found[key]) {
+            found[key] = values[key]
+            updated++
+          };
+        })
+        if (updated > 0) {
           await this.deleteAll();
           await write(this.file, JSON.stringify(products));
-          console.log(found)
+          return true;
         }
       }
-
     } catch (error) {
       console.log(error);
     }
@@ -72,10 +70,12 @@ class fsProductsDao {
   async delete(id) {
     try {
       const products = await read(this.file);
-      const newProducts = products.filter((p) => p.id !== id);
+      const newProducts = products.filter((p) => p.id !== Number(id));
+      if (products.length <= newProducts.length) {return false;}
       await this.deleteAll();
       await write(this.file, JSON.stringify(newProducts));
       console.log(`Se eliminó el producto con id ${id}`);
+      return true;
     } catch (error) {
       console.log(error);
     }
