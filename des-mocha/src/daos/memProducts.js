@@ -50,20 +50,20 @@ class memProductsDao {
     delete(id) {
         if (!this.mem.length < 0) {
             console.log('no product');
-            return false
+            return false;
         }
         const filtered = this.mem.filter((p) => p.id !== Number(id));
         if (filtered.length < this.mem.length) {
             this.mem = filtered
             console.log(`Se eliminó el producto con id ${id}`);
-            return true
+            return true;
         } else {
             console.log('error al eliminar producto');
         }
     }
 
     deleteAll() {
-        this.mem = []
+        this.mem = [];
     }
 }
 

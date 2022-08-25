@@ -5,6 +5,7 @@ const Product = require("./products");
 function getDao() {
   if (argv.storage === "mongo") {
     const ProductsDao = require("../daos/products");
+    argv.mongo = true;
     console.log('persistencia de Mongo');
     return new ProductsDao();
   } else if (argv.storage === "mem") {

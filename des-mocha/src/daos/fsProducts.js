@@ -71,7 +71,7 @@ class fsProductsDao {
     try {
       const products = await read(this.file);
       const newProducts = products.filter((p) => p.id !== Number(id));
-      if (products.length <= newProducts.length) {return false;}
+      if (products.length <= newProducts.length) { return false;}
       await this.deleteAll();
       await write(this.file, JSON.stringify(newProducts));
       console.log(`Se eliminó el producto con id ${id}`);

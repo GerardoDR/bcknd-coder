@@ -34,7 +34,9 @@ class ContainerMongo {
 
   async save(obj) {
     try {
-      return await this.model.insertMany([obj]);
+      let resp = await this.model.insertMany([obj]);
+      console.log(resp);
+      return resp;
     } catch (error) {
       console.log(error);
     }
@@ -42,8 +44,8 @@ class ContainerMongo {
 
   async update(id, values) {
     try {
-      const res = await this.updateOne({ _id: id }, values);
-      return res;
+      await this.model.findByIdAndUpdate(id, values);
+      return true;
     } catch (error) {
       console.log(error);
     }
@@ -52,6 +54,7 @@ class ContainerMongo {
   async delete(id) {
     try {
       await this.model.deleteOne({ _id: id });
+      return true;
     } catch (error) {
       console.log(error);
     }

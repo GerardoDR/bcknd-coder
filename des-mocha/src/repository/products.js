@@ -24,7 +24,7 @@ class Product {
 
   set price(price) {
     if (!price) throw new Error('"price" es un campo requerido');
-    if (isNaN(price)) throw new Error('"price" debe ser numérico');
+    price = Number(price);
     if (price < 0) throw new Error('"price" debe ser positivo');
     this.#price = price;
   }
