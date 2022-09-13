@@ -1,16 +1,10 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { useState } from "preact/hooks";
 
-interface Colors {
-  colors: string[]
-}
-
-export const handler: Handlers<Colors> = {
+export const handler: Handlers = {
   async GET(_req, ctx) {
-    const resp = await fetch('http://localhost:8000/api/colors')
-    const data = await resp.json();
-    console.log(data);
-    
+    const resp = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+    const data = await resp.json();  
     return ctx.render(data);
   },
   async POST(req, ctx) {
@@ -35,7 +29,9 @@ export const handler: Handlers<Colors> = {
 };
 
 
-export default function ColorInput(props: PageProps<Colors>) {
+export default function ColorInput(props) {
+  
+  console.log(props.data);
   
   // const [updColor, setUpdColor] = useState([]);
 

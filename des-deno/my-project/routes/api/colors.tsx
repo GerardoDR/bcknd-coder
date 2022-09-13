@@ -1,16 +1,34 @@
-import { HandlerContext, Handlers } from "$fresh/server.ts";
+import { HandlerContext } from "$fresh/server.ts";
 
-let colors=['red','green'];
+const COLORS = [
+  "red",
+  "green",
+  "blue",
+  "grey",
+  "pink",
+  "orange",
+  "yellow",
+  "brown",
+  "violet",
+  "silver",
+];
 
-function asignColors(newColors: string[]){
-  if(newColors.length > 0){
-    colors = [...newColors]
-  } else { 
-    console.log('valor de newColors: ');
-    console.log(newColors);
-    return [];
-  } 
-}
+export const handler = (_req: Request, _ctx: HandlerContext): Response => {
+  const body = [...COLORS]
+  return new Response(body);
+};
+
+// let colors=['red','green'];
+
+// function asignColors(newColors: string[]){
+//   if(newColors.length > 0){
+//     colors = [...newColors]
+//   } else { 
+//     console.log('valor de newColors: ');
+//     console.log(newColors);
+//     return [];
+//   } 
+// }
 
 // export const handler: Handlers = {
 //     GET(_req: Request, _ctx: HandlerContext) {
@@ -22,7 +40,3 @@ function asignColors(newColors: string[]){
     //   console.log(req.body);
     // }
 // };
-
-export const handler = (_req: Request, _ctx: HandlerContext): Response => {
-  return new Response(colors);
-};
